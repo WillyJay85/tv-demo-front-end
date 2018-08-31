@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SiteNav from './SiteNav'
+import Show from './Show'
 class PreviewPage extends Component {
 render (){
 return (
 
     <div>
            <SiteNav/>
+           <Show />
 
 
 
@@ -14,12 +16,13 @@ return (
             <h2>Shows</h2>
             <div class="box">
 
-                    <button onclick="clickedSweetChoppers()">Sweet Choppers</button>
+                    <Show Name="Sweet Choppers" />
+                    
 
 
             </div>
             <div class="box2">
-                    <button onclick="clickedFloNation()">Flonation</button>
+            <Show Name="Flonation" />
             </div>
         </section>
 
