@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import SiteNav from './SiteNav'
 import Show from './Show'
-
+import './ManagePage.css'
 class ManagePage extends Component {
+    showSelected = () => {
+        return (console.log("showSelected"))
+    }
+    showDeleted = () => {
+        return (console.log('showDeleted'))
+    }
     allowDelete = true
     render() {
         return (
             <div>
                 <SiteNav />
-                <Show />
-            
                 <main>
                     <section>
                         <h2 >Shows</h2>
                         <div className="box">
-                            <Show Name="Sweet Choppers" allowDelete={true} />
-                            <button onClick="clickedDelete()" className="circle">-</button>
-                        </div>
-                        <div className="box2">
-                            <Show Name="Flonation" allowDelete={true} />
-                            <button onClick="clickedDelete()" className="circle">-</button>
+                            <Show selecthandler={this.showSelected} Name="Sweet Choppers" />
+                            <button deletehandler={this.showDeleted} onClick= "clickedDelete()" />
+                            <div className="box2">
+                                <Show selecthandler={this.showSelected} Name="Flonation"  />
+                                <button deletehandler={this.showDeleted} onClick="clickedDelete()" />
+                            </div>
                         </div>
                     </section>
                     <section>
@@ -45,4 +49,5 @@ class ManagePage extends Component {
         )
     }
 }
+
 export default ManagePage

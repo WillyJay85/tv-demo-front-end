@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-
-
-
 class Show extends Component {
     renderDelete = () => {
         if (this.props.allowDelete) {
             return (
-                <button></button>
+                <button onClick={this.props.selectHandler}>-</button>
             )
         }
     }
@@ -15,7 +12,7 @@ class Show extends Component {
 
             <div>
 
-                <button>{this.props.Name}</button>
+               <button onClick={this.props.selectHandler}>>{this.props.Name}</button>
                 {this.renderDelete()}
 
             </div>
