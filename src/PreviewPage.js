@@ -2,27 +2,24 @@ import React, { Component } from 'react';
 import SiteNav from './SiteNav'
 import Show from './Show'
 class PreviewPage extends Component {
+    showSelected = () => {
+        console.log('show Selected')
+    }
 render (){
 return (
 
     <div>
            <SiteNav/>
-           <Show />
 
 
 
 <main>
     <section>
             <h2>Shows</h2>
-            <div class="box">
 
-                    <Show Name="Sweet Choppers" />
-                    
-
-
-            </div>
-            <div class="box2">
-            <Show Name="Flonation" />
+<div>
+<Show selectHandler={this.showSelected} Name="Sweet Choppers" />
+<Show selectHandler={this.showSelected}Name="Flonation" />
             </div>
         </section>
 

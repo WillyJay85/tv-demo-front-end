@@ -3,11 +3,14 @@ import SiteNav from './SiteNav'
 import Show from './Show'
 import './ManagePage.css'
 class ManagePage extends Component {
+    savedTvShow = () => {
+        console.log('Saved TV Show')
+    }
     showSelected = () => {
-        return (console.log("showSelected"))
+        console.log('Show Selected')
     }
     showDeleted = () => {
-        return (console.log('showDeleted'))
+        console.log('Show Deleted')
     }
     allowDelete = true
     render() {
@@ -17,17 +20,13 @@ class ManagePage extends Component {
                 <main>
                     <section>
                         <h2 >Shows</h2>
-                        <div className="box">
-                            <Show selecthandler={this.showSelected} Name="Sweet Choppers" />
-                            <button deletehandler={this.showDeleted} onClick= "clickedDelete()" />
-                            <div className="box2">
-                                <Show selecthandler={this.showSelected} Name="Flonation"  />
-                                <button deletehandler={this.showDeleted} onClick="clickedDelete()" />
-                            </div>
-                        </div>
+                       
+                            <Show selectHandler={this.showSelected} deleteHandler={this.showDeleted} Name="Sweet Choppers" allowDelete={true}/>
+                            <Show selectHandler={this.showSelected} deleteHandler={this.showDeleted} Name="Flonation"  allowDelete={true}/>                          
+                       
                     </section>
                     <section>
-                        <form>
+                       
                             <h2>New/Edit</h2>
                             <div>
                                 <label>Name:</label>
@@ -41,8 +40,8 @@ class ManagePage extends Component {
                                 <label>Image URL:</label>
                                 <input type="text" />
                             </div>
-                            <button onClick="clickedSubmit()">submit</button>
-                        </form>
+                            <button onClick={this.savedTvShow}>submit</button>
+                        
                     </section>
                 </main>
             </div>
