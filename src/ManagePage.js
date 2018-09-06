@@ -15,7 +15,7 @@ class ManagePage extends Component {
     }
 
     handleNameChange = (event) => {
-        console.log(event.target.value)
+        console.log(this.state)
         this.setState({
             nameInProgress: event.target.value
         })
@@ -43,7 +43,10 @@ class ManagePage extends Component {
             nameInProgress: '',
             ratingInProgress: '',
             imageUrlInProgress: ''
+
+           
         })
+       
     }
  
 
@@ -73,6 +76,7 @@ class ManagePage extends Component {
     }
     allowDelete = true
     render() {
+        console.log(this.state.show)
         return (
             <div>
                 <SiteNav />
