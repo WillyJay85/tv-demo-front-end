@@ -1,17 +1,19 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import SiteNav from './SiteNav'
 import Show from './Show'
 import './ManagePage.css'
+import PropTypes from 'prop-types'
 class ManagePage extends Component {
+    static propTypes = {
+        show: PropTypes.object.isRequired,
+        showDeleted: PropTypes.func.isRequired,
+        saveShow: PropTypes.func.isRequired
+    }
+
     state = {
         nameInProgress: '',
         ratingInProgress: '',
         imageUrlInProgress: '',
-        show: {
-            name: '',
-            rating: '',
-            imageUrl: ''
-        }
     }
 
     handleNameChange = (event) => {
@@ -21,7 +23,7 @@ class ManagePage extends Component {
         })
     }
     handleRatingChange = (event) => {
-        console.log (event.target.value)
+        console.log(event.target.value)
         this.setState({
             ratingInProgress: event.target.value
         })
@@ -34,46 +36,44 @@ class ManagePage extends Component {
     }
 
     savedTvShow = () => {
+        this.props.saveShow({
+            name: this.state.nameInProgress,
+            rating: this.state.ratingInProgress,
+            imageUrl: this.state.imageUrlInProgress
+
+        })
+
         this.setState({
-            show: {
-                name: this.state.nameInProgress,
-                rating: this.state.ratingInProgress,
-                imageUrl: this.state.imageUrlInProgress
-            },
             nameInProgress: '',
             ratingInProgress: '',
             imageUrlInProgress: ''
 
-           
+
         })
-       
+
+
     }
- 
+
 
 
     renderShows = () => {
         return (
-            <Show selectHandler={this.showSelected} deleteHandler={this.showDeleted} name={this.state.show.name} allowDelete={true}/>
-        )
+            <Show  name={this.props.show.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
+        ) 
     }
 
     showSelected = () => {
         this.setState({
-            nameInProgress: this.state.show.name,
-            ratingInProgress: this.state.show.rating,
-            imageUrlInProgress: this.state.show.imageUrl
+            nameInProgress: this.props.show.name,
+            ratingInProgress: this.props.show.rating,
+            imageUrlInProgress: this.props.show.imageUrl
         })
     }
 
     showDeleted = () => {
-        this.setState({
-            show: {
-                name: '',
-                rating: '',
-                imageUrl: ''
-            }
-        })
+        this.props.showDeleted()
     }
+
     allowDelete = true
     render() {
         console.log(this.state.show)
@@ -83,26 +83,26 @@ class ManagePage extends Component {
                 <main>
                     <section>
                         <h2 >Shows</h2>
-                       {this.renderShows()}
-                       
+                        {this.renderShows()}
+
                     </section>
                     <section>
-                       
-                            <h2>New/Edit</h2>
-                            <div>
-                                <label>Name:</label>
-                                <input type="text" value={this.state.nameInProgress} onChange={this.handleNameChange}/>
-                            </div>
-                            <div>
-                                <label>Rating:</label>
-                                <input type="text" value={this.state.ratingInProgress} onChange={this.handleRatingChange} />
-                            </div>
-                            <div>
-                                <label>Image URL:</label>
-                                <input type="text" value={this.state.imageUrlInProgress} onChange={this.handleImageUrlChange} />
-                            </div>
-                            <button onClick={this.savedTvShow}>submit</button>
-                        
+
+                        <h2>New/Edit</h2>
+                        <div>
+                            <label>Name:</label>
+                            <input type="text" value={this.state.name} onChange={this.handleNameChange} />
+                        </div>
+                        <div>
+                            <label>Rating:</label>
+                            <input type="text" value={this.state.ratingInProgress} onChange={this.handleRatingChange} />
+                        </div>
+                        <div>
+                            <label>Image URL:</label>
+                            <input type="text" value={this.state.imageUrlInProgress} onChange={this.handleImageUrlChange} />
+                        </div>
+                        <button onClick={this.savedTvShow}>submit</button>
+
                     </section>
                 </main>
             </div>
