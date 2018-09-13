@@ -4,29 +4,23 @@ import ManagePage from './ManagePage'
 import PreviewPage from './PreviewPage'
 import './ManagePage.css'
 import './PreviewPage.css'
-import PropTypes from 'prop-types'
 import './App.css';
 
 class App extends Component {
-  static propTypes = {
-    show: PropTypes.object.isRequired}
-    state = {
-      showSelected: {
-        name: '',
-        rating: '',
-        imageUrl: ''
-      }
-    }
+
+
   state = {
+    
     show: {
         name: '',
         rating: '',
         imageUrl: ''
-    }
+    },
+    tvShows: []
 }
 
 renderManagePage =() =>{
-  return(<ManagePage show= {this.state.show} showDeleted={this.showDeleted} saveShow={this.saveShow}/>)
+  return(<ManagePage tvShows={this.state.tvShows} show={this.state.show} showDeleted={this.showDeleted} saveShow={this.saveShow}/>)
 }
 
 renderPreviewPage = () =>{
@@ -44,13 +38,13 @@ showDeleted = () => {
 
 
 saveShow = (showToSave) =>{
-  this.setState({
-    show: {
+  this.setState((prevState) => ({
+    tvShows: [...prevState.tvShows, {
       name: showToSave.name,
       rating: showToSave.rating,
       imageUrl: showToSave.imageUrl
-    }
-  }
+    }]
+  })
 
   )
 }

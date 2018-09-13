@@ -8,18 +8,27 @@ class PreviewPage extends Component {
         show: PropTypes.object.isRequired
 
     }
-
+    state = {
+        showSelected: {
+          name: '',
+          rating: '',
+          imageUrl: ''
+        }
+      }
     renderShows = () => {
         return (
-            <Show name={this.props.show.name} selectHandler={this.props.show.showSelected} />
+            <Show name={this.props.show.name} selectHandler={this.showSelected} />
         )
     }
 
-    //showSelected = () => {
-        
-        
-        
-    //}
+    showSelected = () => {
+        this.setState ({
+            showSelected: this.props.showSelected
+        })
+
+        }
+    
+
     render() {
         console.log(this.props.show)
         return (
@@ -34,10 +43,10 @@ class PreviewPage extends Component {
                     </section>
                     <section>
                         <div>
-                            <h2>{this.props.showSelected.name}</h2>
-                            <h2>{this.props.showSelected.rating}</h2>
+                            <h2>{this.state.showSelected.name}</h2>
+                            <h2>{this.state.showSelected.rating}</h2>
 
-                            <img src={this.props.showSelected.imageUrl} alt="The show's preview pic" />
+                            <img src={this.state.showSelected.imageUrl} alt="The show's preview pic" />
                         </div>
                     </section>
                 </main>

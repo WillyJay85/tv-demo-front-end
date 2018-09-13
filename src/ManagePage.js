@@ -5,9 +5,10 @@ import './ManagePage.css'
 import PropTypes from 'prop-types'
 class ManagePage extends Component {
     static propTypes = {
+        tvShows: PropTypes.array.isRequired,
         show: PropTypes.object.isRequired,
         showDeleted: PropTypes.func.isRequired,
-        saveShow: PropTypes.func.isRequired
+        saveShow: PropTypes.func.isRequired,
     }
 
     state = {
@@ -57,9 +58,13 @@ class ManagePage extends Component {
 
 
     renderShows = () => {
-        return (
-            <Show  name={this.props.show.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
-        ) 
+        const showsToRender = []
+        for (const tvShow of this.props.tvShows){
+            showsToRender.push((
+                <Show key={tvShow.name}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
+            ))
+        }
+        return  showsToRender
     }
 
     showSelected = () => {
