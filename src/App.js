@@ -24,7 +24,7 @@ renderManagePage =() =>{
 }
 
 renderPreviewPage = () =>{
-  return(<PreviewPage show= {this.state.show} showSelected= {this.state.show} />)
+  return(<PreviewPage tvShows={this.state.tvShows} show={this.state.show} showSelected={this.state.show} />)
 }
 showDeleted = () => {
   this.setState({

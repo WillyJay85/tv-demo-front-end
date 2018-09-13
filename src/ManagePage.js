@@ -39,7 +39,7 @@ class ManagePage extends Component {
     savedTvShow = () => {
         this.props.saveShow({
             name: this.state.nameInProgress,
-            rating: this.state.ratingInProgress,
+            rating: Number(this.state.ratingInProgress),
             imageUrl: this.state.imageUrlInProgress
 
         })
@@ -58,13 +58,21 @@ class ManagePage extends Component {
 
 
     renderShows = () => {
-        const showsToRender = []
-        for (const tvShow of this.props.tvShows){
-            showsToRender.push((
-                <Show key={tvShow.name}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
-            ))
-        }
-        return  showsToRender
+        return this.props.tvShows.map(
+            (tvShow, i) => {
+               return(
+                <Show key={i}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
+                )
+            }
+        )
+
+        //const showsToRender = []
+        //for (const tvShow of this.props.tvShows){
+         //   showsToRender.push((
+         //       <Show key={tvShow.name}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
+         //   ))
+        //}
+        //return  showsToRender
     }
 
     showSelected = () => {
@@ -96,7 +104,7 @@ class ManagePage extends Component {
                         <h2>New/Edit</h2>
                         <div>
                             <label>Name:</label>
-                            <input type="text" value={this.state.name} onChange={this.handleNameChange} />
+                            <input type="text" value={this.state.nameInProgress} onChange={this.handleNameChange} />
                         </div>
                         <div>
                             <label>Rating:</label>

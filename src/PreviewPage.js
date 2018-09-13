@@ -5,7 +5,8 @@ import Show from './Show'
 class PreviewPage extends Component {
 
     static propTypes = {
-        show: PropTypes.object.isRequired
+        show: PropTypes.object.isRequired,
+        tvShows: PropTypes.array.isRequired
 
     }
     state = {
@@ -16,9 +17,16 @@ class PreviewPage extends Component {
         }
       }
     renderShows = () => {
-        return (
-            <Show name={this.props.show.name} selectHandler={this.showSelected} />
+        const filteredTVShows = this.props.tvShows.filter(
+            (tvShow) =>  {
+                return tvShow.rating < 5
+            }
         )
+        return filteredTVShows.map((tvShow, i) => {
+            return (
+                <Show key={i} name={tvShow.name} selectHandler={this.showSelected} />
+            )
+            })
     }
 
     showSelected = () => {
@@ -27,7 +35,19 @@ class PreviewPage extends Component {
         })
 
         }
-    
+    calculateAvgRating = () => {
+        if (this.props.tvShows.length < 2){
+        return 0 
+    }
+        const sumOfRatings = this.props.tvShows.reduce(
+            (prevValue, currentValue, i) => {
+                return (prevValue.rating || prevValue) + currentValue.rating
+                
+            }
+        )
+        const avgRating = sumOfRatings / this.props.tvShows.length
+        return Math.round(avgRating *10) /10
+    }
 
     render() {
         console.log(this.props.show)
@@ -39,6 +59,7 @@ class PreviewPage extends Component {
 
 
                         <h2>Shows</h2>
+                        <h3>Avg Rating: {this.calculateAvgRating()}</h3>
                         {this.renderShows()}
                     </section>
                     <section>
