@@ -15,7 +15,7 @@ class PreviewPage extends Component {
           rating: '',
           imageUrl: ''
         }
-      }
+      }  
     renderShows = () => {
         const filteredTVShows = this.props.tvShows.filter(
             (tvShow) =>  {
@@ -36,7 +36,7 @@ class PreviewPage extends Component {
 
         }
     calculateAvgRating = () => {
-        if (this.props.tvShows.length < 2){
+        if (this.props.tvShows.length <   2){
         return 0 
     }
         const sumOfRatings = this.props.tvShows.reduce(

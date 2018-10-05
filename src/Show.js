@@ -18,7 +18,7 @@ class Show extends Component {
         }
     }
     render() {
-        return (
+        return (    
 
             <div>
                <button onClick={this.props.selectHandler} >{this.props.name}</button>

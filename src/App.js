@@ -9,18 +9,10 @@ import './App.css';
 class App extends Component {
 
 
-  state = {
-    
-    show: {
-        name: '',
-        rating: '',
-        imageUrl: ''
-    },
-    tvShows: []
-}
+  
 
 renderManagePage =() =>{
-  return(<ManagePage tvShows={this.state.tvShows} show={this.state.show} showDeleted={this.showDeleted} saveShow={this.saveShow}/>)
+  return(<ManagePage/>)
 }
 
 renderPreviewPage = () =>{

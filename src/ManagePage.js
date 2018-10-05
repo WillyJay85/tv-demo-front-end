@@ -2,63 +2,86 @@ import React, { Component } from 'react';
 import SiteNav from './SiteNav'
 import Show from './Show'
 import './ManagePage.css'
-import PropTypes from 'prop-types'
-class ManagePage extends Component {
-    static propTypes = {
-        tvShows: PropTypes.array.isRequired,
-        show: PropTypes.object.isRequired,
-        showDeleted: PropTypes.func.isRequired,
-        saveShow: PropTypes.func.isRequired,
-    }
+ class ManagePage extends Component {
+state = {
+    nameInProgress: '',
+    ratingInProgress: '',
+    imageUrlInProgress: '',
+}
 
-    state = {
-        nameInProgress: '',
-        ratingInProgress: '',
-        imageUrlInProgress: '',
-    }
+async componentDidMount (){
+    const response = await fetch('http://localhost:3000/tv-demo', { 
+        headers: {  'Accept': 'application/json',
+        'Content-Type': 'application/json' }
+    })
+    const data = await response.json()
+    console.log(data)
+    this.setState({
+        tvShows: data
+    })
+}   
 
     handleNameChange = (event) => {
         console.log(this.state)
         this.setState({
-            nameInProgress: event.target.value
+            name: event.target.value
         })
     }
     handleRatingChange = (event) => {
         console.log(event.target.value)
         this.setState({
-            ratingInProgress: event.target.value
+            rating: event.target.value
         })
     }
     handleImageUrlChange = (event) => {
         console.log(event.target.value)
         this.setState({
-            imageUrlInProgress: event.target.value
+            imageUrl: event.target.value
         })
     }
 
-    savedTvShow = () => {
-        this.props.saveShow({
-            name: this.state.nameInProgress,
-            rating: Number(this.state.ratingInProgress),
-            imageUrl: this.state.imageUrlInProgress
+    savedTvShow  = async () => {
+        let body = {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+     const response = await fetch('http://localhost:3000/tv-demo', body)
+     const data = await response.json()
+     console.log(data)
+     this.setState({
+         tvShows: data
+     })
 
-        })
+           
+     }
+        // this.props.saveShow({
+        //     name: this.state.nameInProgress,
+        //     rating: Number(this.state.ratingInProgress),
+        //     imageUrl: this.state.imageUrlInProgress
 
-        this.setState({
-            nameInProgress: '',
-            ratingInProgress: '',
-            imageUrlInProgress: ''
+        // })
+
+        // this.setState({
+        //     nameInProgress: '',
+        //     ratingInProgress: '',
+        //     imageUrlInProgress: ''
 
 
-        })
+        // })
 
 
-    }
+    
 
 
 
     renderShows = () => {
-        return this.props.tvShows.map(
+    console.log(this.state.tvShows)
+        if(this.state.tvShows)
+        return this.state.tvShows.map(
             (tvShow, i) => {
                return(
                 <Show key={i}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
@@ -66,25 +89,17 @@ class ManagePage extends Component {
             }
         )
 
-        //const showsToRender = []
-        //for (const tvShow of this.props.tvShows){
-         //   showsToRender.push((
-         //       <Show key={tvShow.name}  name={tvShow.name} selectHandler={this.showSelected} deleteHandler={this.showDeleted}  allowDelete={true} />
-         //   ))
-        //}
-        //return  showsToRender
     }
-
     showSelected = () => {
-        this.setState({
-            nameInProgress: this.props.show.name,
-            ratingInProgress: this.props.show.rating,
-            imageUrlInProgress: this.props.show.imageUrl
-        })
+        // this.setState({
+        //     nameInProgress: this.props.show.name,
+        //     ratingInProgress: this.props.show.rating,
+        //     imageUrlInProgress: this.props.show.imageUrl
+        // })
     }
 
     showDeleted = () => {
-        this.props.showDeleted()
+        // this.props.showDeleted()
     }
 
     allowDelete = true
@@ -104,15 +119,15 @@ class ManagePage extends Component {
                         <h2>New/Edit</h2>
                         <div>
                             <label>Name:</label>
-                            <input type="text" value={this.state.nameInProgress} onChange={this.handleNameChange} />
+                            <input type="text" value={this.state.name} onChange={this.handleNameChange} />
                         </div>
                         <div>
                             <label>Rating:</label>
-                            <input type="text" value={this.state.ratingInProgress} onChange={this.handleRatingChange} />
+                            <input type="text" value={this.state.rating} onChange={this.handleRatingChange} />
                         </div>
                         <div>
                             <label>Image URL:</label>
-                            <input type="text" value={this.state.imageUrlInProgress} onChange={this.handleImageUrlChange} />
+                            <input type="text" value={this.state.imageUrl} onChange={this.handleImageUrlChange} />
                         </div>
                         <button onClick={this.savedTvShow}>submit</button>
 
@@ -121,6 +136,7 @@ class ManagePage extends Component {
             </div>
         )
     }
-}
+    
+ }
 
 export default ManagePage
